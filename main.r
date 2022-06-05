@@ -6,15 +6,9 @@ source("./natenews.r")
 library(future)
 library(future.apply)
 
+library(tidyverse)
 
-"https://raw.githubusercontent.com/HyunP-dev/nate-news-scraper/main/natenews.py" |>
-    download.file("natenews.py")
-
-natenews <- import("natenews")
 text_classify <- import("model")$text_classify
-
-news_list <- natenews$get_news_list("20220531", FALSE)
-natenews$get_news_comments(news_list[1, 4], 1) |> View()
 
 plan(multicore, workers = 8)
 
@@ -31,11 +25,6 @@ seq(
     by = "day",
     length.out = 10) -> ds
 
-get_week <- function(date) {
-    sprintf("%d")
-}
-
-tic()
 tasks <- future_Map(function(date) {
     cbind(
         year = as.integer(format(date, "%Y")),
@@ -43,6 +32,5 @@ tasks <- future_Map(function(date) {
         week = as.integer(format(date, "%U")),
         get_news_list(format(date, "%Y%m%d"), F))
 }, ds)
-toc()
 
 do.call(rbind, tasks) -> df

@@ -51,5 +51,23 @@ get_news_comments <- function(url, page) {
         "mid=%s&domain=&argList=0&best=0&return_sq=&connectAuth=N&page=%d"
     ) |>
         sprintf(artc_sq, mid, page)
-    
+    doc <- rvest::read_html(comment_url)
+    cmt_items <- doc |> rvest::html_elements(".cmt_item")
+    do.call(rbind.data.frame, Map(function(item) {
+        list(
+            name = item |>
+                rvest::html_element(".nameui") |>
+                rvest::html_text() |>
+                stringr::str_trim(),
+            date = item |>
+                rvest::html_element(".date") |>
+                rvest::html_text() |>
+                substring(3) |>
+                paste(substring(artc_sq, 1, 4)),
+            text = item |>
+                rvest::html_element(".usertxt") |>
+                rvest::html_text() |>
+                stringr::str_trim()
+        )
+    }, cmt_items))
 }
