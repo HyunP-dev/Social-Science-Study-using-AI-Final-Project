@@ -25,12 +25,28 @@ seq(
     by = "day",
     length.out = 10) -> ds
 
-tasks <- future_Map(function(date) {
-    cbind(
+df <- do.call(rbind, future_Map(function(date) {
+    data.frame(
         year = as.integer(format(date, "%Y")),
         month = as.integer(format(date, "%m")),
         week = as.integer(format(date, "%U")),
         get_news_list(format(date, "%Y%m%d"), F))
-}, ds)
+}, ds))
 
-do.call(rbind, tasks) -> df
+do.call(
+    rbind.data.frame,
+    future_Map(function(page) {
+        "https://news.nate.com/view/20220530n31323?mid=n1006" |>
+            get_news_comments(page)
+    }, 1:5)
+) -> comments_df
+comments_df$text |>
+    text_classify() -> cfd_df
+cfd_df |> sapply(mean) |> barplot()
+
+
+library(DBI)
+library(RSQLite)
+conn <- dbConnect(RSQLite::SQLite(), "./natenews.sqlite")
+dbWriteTable(conn, "week_articles", df, append = TRUE)
+
