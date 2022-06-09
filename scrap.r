@@ -30,5 +30,3 @@ df <- do.call(rbind, future_Map(function(date) {
 
 dbWriteTable(conn, "week_articles", df, append = TRUE)
 
-
-
