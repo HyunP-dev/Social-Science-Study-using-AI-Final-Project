@@ -1,0 +1,7 @@
+sudo docker container run -it --gpus all --name "pytorch-gpu" -p 80:80 -d pytorch/pytorch:1.9.0-cuda10.2-cudnn7-runtime
+
+sudo docker commit pytorch-gpu huggingface-gpu
+
+sudo docker container run -it --gpus all --name "pytorch-gpu" -p 80:80 -d huggingface-gpu
+
+sudo docker container run -it --gpus all --name "pytorch-gpu" -p 80:80 -v ~/Documents/GitHub/Social-Science-Study-using-AI-Final-Project:/workspace -d huggingface-gpu
