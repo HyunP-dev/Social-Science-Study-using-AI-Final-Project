@@ -7,7 +7,7 @@ tokenizer = AutoTokenizer.from_pretrained(model_name)
 pipe = TextClassificationPipeline(
     model = model,
     tokenizer = tokenizer,
-    device = -1,   # cpu: -1, gpu: gpu number
+    device = 0,   # cpu: -1, gpu: gpu number
     return_all_scores = True,
     function_to_apply = 'sigmoid'
 )   
