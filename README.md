@@ -19,6 +19,6 @@
 └── scripts              : 프로젝트를 진행하며 작성한 코드
     ├── docker_server.py : R과 통신하기 위한 Docker에서 쓸 서버 코드
     ├── model.py         : Korean UnSmile Dataset 의 인공지능 모델
-    ├── natenews.r       : nate 뉴스를 수집할 때 사용할 함수들을 정의한 코드
+    └── natenews.r       : nate 뉴스를 수집할 때 사용할 함수들을 정의한 코드
     └── scrap.r          : nate 뉴스를 수집하고 DB에 저장하는 코드
 ```
