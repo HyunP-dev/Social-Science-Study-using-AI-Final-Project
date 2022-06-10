@@ -1,21 +1,42 @@
-library(reticulate)
-use_python("~/anaconda3/bin/python")
-
-source("./natenews.r")
-
 library(future)
 library(future.apply)
-
+library(DBI)
+library(RSQLite)
 library(tidyverse)
 
-text_classify <- import("model")$text_classify
+
+source("./scripts/natenews.r")
 
 plan(multicore, workers = 8)
 
+conn <- dbConnect(RSQLite::SQLite(), "./databases/natenews.sqlite")
+
+
+# [ 댓글을 수집할 기사들의 url 수집 ]
+
+# 2015년부터 향후 7년 간 주 간격으로 시간 샘플링.
+seq(
+    as.Date("2015/01/01"),
+    by = "week",
+    length.out = (365 * 7 + 2) / 7
+) -> ds
+
+# tor proxy를 이용.
 httr::set_config(httr::use_proxy("socks5://localhost:9050"))
-httr::reset_config()
+
+df <- do.call(rbind, future_Map(function(date) {
+    data.frame(
+        year = as.integer(format(date, "%Y")),
+        month = as.integer(format(date, "%m")),
+        week = as.integer(format(date, "%U")),
+        get_news_list(format(date, "%Y%m%d"), F)
+    )
+}, ds))
+
+dbWriteTable(conn, "week_articles", df, append = TRUE)
 
 
+# [ 댓글 수집 ]
 
 curr <- dbGetQuery(conn, "SELECT url FROM scraped_urls")
 targets <- Filter(function(url) which(curr$url == url) == 0, df$url)
@@ -37,19 +58,3 @@ for (url in targets) {
     )
     pb$tick()
 }
-
-comments_df$text |>
-    text_classify() -> cfd_df
-cfd_df |>
-    sapply(mean) |>
-    barplot()
-
-
-library(DBI)
-library(RSQLite)
-conn <- dbConnect(RSQLite::SQLite(), "./natenews.sqlite")
-
-
-
-
-dbGetQuery(conn, "SELECT * FROM comments") |> View()
