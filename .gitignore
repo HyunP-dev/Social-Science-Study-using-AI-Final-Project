@@ -1,5 +1,6 @@
-__pycache__/*
+__pycache__
 natenews.py
+scripts/__pycache__
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
