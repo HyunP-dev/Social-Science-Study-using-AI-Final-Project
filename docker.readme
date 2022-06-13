@@ -4,4 +4,4 @@ sudo docker commit pytorch-gpu huggingface-gpu
 
 sudo docker container run -it --gpus all --name "pytorch-gpu" -p 80:80 -d huggingface-gpu
 
-sudo docker container run -it --gpus all --name "pytorch-gpu" -p 80:80 -v ~/Documents/GitHub/Social-Science-Study-using-AI-Final-Project:/workspace -d huggingface-gpu
+sudo docker container run --cap-add=NET_ADMIN -it --gpus all --name "pytorch-gpu" -p 80:80 -p 8080:8080 -v ~/Documents/GitHub/Social-Science-Study-using-AI-Final-Project:/workspace -d huggingface-gpu

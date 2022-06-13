@@ -121,3 +121,12 @@ Reduce(function(acc, cur) {
 fig
 orca(fig, "reports/images/radarchart.pdf", format = "pdf")
 
+
+analyzed_df |>
+    select(-ym) %>%
+    plot_ly(
+        x = colnames(.),
+        y = colnames(.),
+        z = cor(.),
+        colors = "Blues",
+        type = "heatmap")
