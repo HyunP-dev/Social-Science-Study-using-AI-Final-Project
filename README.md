@@ -8,17 +8,19 @@
 ## Files Tree
 ```
 .
-├── databases            : 데이터베이스
-│   └── natenews.sqlite  : 수집한 데이터들을 저장한 데이터베이스
-├── docker.readme        : NVIDIA Docker 관련 명령어를 적어둔 쪽지
-├── README.md            : 본 파일
-├── reports              : 발표 자료
-│   ├── images           : 발표자료에 쓰일 이미지들을 모아둔 폴더
-│   ├── presentation.pdf : tex 파일을 컴파일한 결과물
-│   ├── presentation.tex : 발표용 TeX 파일
-└── scripts              : 프로젝트를 진행하며 작성한 코드
-    ├── docker_server.py : R과 통신하기 위한 Docker에서 쓸 서버 코드
-    ├── model.py         : Korean UnSmile Dataset 의 인공지능 모델
-    └── natenews.r       : nate 뉴스를 수집할 때 사용할 함수들을 정의한 코드
-    └── scrap.r          : nate 뉴스를 수집하고 DB에 저장하는 코드
+├── databases                : 데이터베이스
+│   └── natenews.sqlite      : 수집한 데이터들을 저장한 데이터베이스
+├── docker.readme            : NVIDIA Docker 관련 명령어를 적어둔 쪽지
+├── README.md                : 본 파일
+├── reports                  : 발표 자료
+│   ├── images               : 발표자료에 쓰일 이미지들을 모아둔 폴더
+│   ├── presentation.pdf     : tex 파일을 컴파일한 결과물
+│   └── presentation.tex     : 발표용 TeX 파일
+└── scripts                  : 프로젝트를 진행하며 작성한 코드
+    ├── analyze.r            : 수집한 데이터를 이용해 여러 분석을 수행하는 코드
+    ├── docker_server.py     : R과 통신하기 위한 Docker에서 쓸 서버 코드
+    ├── model.py             : Korean UnSmile Dataset 의 인공지능 모델
+    ├── natenews.r           : nate 뉴스를 수집할 때 사용할 함수들을 정의한 코드
+    ├── scrap.r              : nate 뉴스를 수집하고 DB에 저장하는 코드
+    └── sentiment_analyzer.r : docker에 열린 서버를 이용해 감정 분석을 해주는 코드
 ```
