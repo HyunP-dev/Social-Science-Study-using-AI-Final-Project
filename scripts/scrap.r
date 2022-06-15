@@ -22,6 +22,8 @@ seq(
 ) -> ds
 
 # tor proxy를 이용.
+# 포트 확인:
+#   sudo netstat -nap | grep LISTEN | grep tor
 httr::set_config(httr::use_proxy("socks5://localhost:9050"))
 
 df <- do.call(rbind, future_Map(function(date) {

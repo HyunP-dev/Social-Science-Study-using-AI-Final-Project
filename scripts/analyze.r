@@ -108,7 +108,7 @@ fig
 orca(fig, "reports/images/lineplot.pdf", format = "pdf")
 
 Reduce(function(acc, cur) {
-        acc %>%
+        acc |>
             add_trace(
                 r = as.vector(unlist(cur))[2:11],
                 theta = attributes(cur)$names[2:11],
@@ -129,4 +129,5 @@ analyzed_df |>
         y = colnames(.),
         z = cor(.),
         colors = "Blues",
-        type = "heatmap")
+        type = "heatmap") -> fig
+orca(fig, "reports/images/heatmap.pdf", format = "pdf")

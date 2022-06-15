@@ -1,10 +1,9 @@
 from flask import Flask, jsonify, request
 from model import text_classify
-import pandas as pd
 import json
 
 app = Flask(__name__)
- 
+
 @app.route('/')
 def hello_world():
     return jsonify(text_classify(["안녕하세요"]).to_dict(orient = "list"))
